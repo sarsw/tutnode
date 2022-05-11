@@ -1,26 +1,30 @@
-// npm - global command comes with node
-// npm --versiom
+const {readFile} = require('fs');
 
-// install for a local dependency - use it in this particular project
-// npm -i <package name>
-// npm install
+const getText = (path) => {
+    return new Promise((resolve, reject)=>{
+        readFile(path, 'utf8', (err, data) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(data)
+            }
+        })
+    })
+}
 
-// install global dependency - available to all projects
-// npm i -g <package name>
+console.log('start');
 
+// getText('./content/first.txt')
+//     .then((result)=>console.log(result))
+//     .catch((err) => console.log(err))
 
-// package.json - a manifest file that lists info & dependencies for the project
-//  it exists in the root folder of the project & can be created manually
-// npm init (a wizard to create the project template)
-// npm init -y (accept all defaults)
-// npm i nodemon -D (or --save-dev) install and save as adev dependency
-// npm run dev (can be used to run a dev scripts usinf nodemon, e.g.     "dev": "nodemon app.js")
-
-const _ = require('lodash')
-
-const data = [1,[2,[3,[4]]]]
-
-const newData = _.flattenDeep(data)
-
-console.log(data);
-console.log((newData));
+const start = async() => {
+    try {
+            const first = await getText('./content/first.txt')
+            const second = await getText('./content/second.txt')
+            console.log(first, second);
+    } catch (error) {
+        console.log(error);
+    }
+}
+start()
