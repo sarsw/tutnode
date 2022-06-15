@@ -1,27 +1,21 @@
 const express = require('express')
+const path = require('path')
 const app = express()
 
-// app.get
-// app.post
-// app.put
-// app.delete
-// app.all
-// app.use
-// app.listen
-// ...
+// setup static and middleware
+app.use(express.static('./public'))
 
-app.get('/', (req,res) => {
-    res.status(200).send('Home Page')
+// app.get('/', (rq, rs)=>{
+//     rs.sendFile(path.resolve(__dirname,'./navbar-app/index.html'))
+// can put html to static asset folder & SSR (templates)
+// })
+
+app.all('*', (rq,rs)=>{
+    rs.status(404).send('resource not found')
 })
 
-app.get('/about', (req,res) => {
-    res.status(200).send('About Page')
+
+app.listen(5000, () =>{
+    console.log("listening on 5000");
 })
 
-app.all('*', (req,res) => {
-    res.status(404).send('<h1>Not Found</h1>')
-})
-
-app.listen(5000, () => {
-    console.log("listening on port 5000");
-})
